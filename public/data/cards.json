@@ -15,7 +15,7 @@
                 "displayName":  "Lv30"
             },
     "普40":  {
-                "weight":  1469.9999999999998,
+                "weight":  1470,
                 "category":  "普卡",
                 "displayName":  "Lv40"
             },
@@ -60,7 +60,7 @@
                  "displayName":  "Lv120"
              },
     "王30":  {
-                "weight":  6299.999999999999,
+                "weight":  6300,
                 "category":  "王卡",
                 "displayName":  "Lv30"
             },
@@ -90,7 +90,7 @@
                 "displayName":  "Lv80"
             },
     "王90":  {
-                "weight":  24499.999999999996,
+                "weight":  24500,
                 "category":  "王卡",
                 "displayName":  "Lv90"
             },
