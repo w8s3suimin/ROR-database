@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>升格預算表 - RoRDB</title>
+<style>
+  .budget-container { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); padding: 20px; border-radius: 12px; border: 1px solid #dadce0; max-width: 800px; margin: 0 auto; box-shadow: 0 1px 3px 0 rgba(60,64,67,0.3); }
+  .budget-container h1 { text-align: center; color: #1a73e8; margin-bottom: 20px; font-weight: 500; font-size: 22px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+  
+  .label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .budget-container label { font-weight: bold; color: #3c4043; font-size: 0.95rem; }
+  
+  .quick-coins { display: flex; gap: 6px; }
+  .coin-icon-btn { 
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid #ddd; border-radius: 6px; cursor: pointer;
+    background: #fff; transition: all 0.2s;
+  }
+  .coin-icon-btn:hover { background: #e8f0fe; border-color: #1a73e8; transform: scale(1.1); }
+  .coin-icon-btn img { width: 22px; height: 22px; object-fit: contain; }
+  
+  .price-control { display: flex; align-items: center; gap: 5px; }
+  .price-btn { width: 45px; height: 40px; background-color: #e8f0fe; color: #1a73e8; border: 1px solid #1a73e8; border-radius: 8px; font-weight: bold; cursor: pointer; }
+  #coinPrice { text-align: center; flex: 1; height: 40px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; margin-top: 0; box-sizing: border-box; }
+
+  .budget-container select, .budget-container input[type="number"] { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; box-sizing: border-box; margin-top: 5px; min-height: 41px; }
+  button.main-calc { width: 100%; background-color: #1a73e8; color: white; border: none; cursor: pointer; transition: background 0.3s; margin-top: 15px; padding: 12px; font-size: 18px; border-radius: 8px; font-weight: bold; }
+  button.main-calc:hover { background-color: #1557b0; }
+  
+  .result { margin-top: 20px; padding: 15px; background: #e8f0fe; border-radius: 8px; font-size: 16px; min-height: 50px; border-left: 5px solid #1a73e8; color: #1a73e8; line-height: 1.5; font-weight: 500;}
+  
+  .table-section-title { text-align: center; margin-top: 40px; }
+  .table-section-title h2 { color: #1a73e8; margin-bottom: 5px; font-size: 20px; font-weight: 500;}
+  .table-section-title h4 { color: #5f6368; font-weight: normal; margin-top: 0; padding: 0 10px; font-size: 14px;}
+
+  /* --- 表格容器優化 --- */
+  .table-container { 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid rgba(218, 220, 224, 0.5);
+    border-radius: 12px;
+    background: #fff;
+    max-width: 900px;
+    margin: 40px auto 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  }
+  table { width: 100%; border-collapse: separate; border-spacing: 0; }
+  th, td { border-bottom: 1px solid #ddd; border-right: 1px solid #ddd; padding: 12px 10px; text-align: center; background-color: rgba(255,255,255,0.7); font-size: 15px; }
+
+  /* 凍結欄位寬度與電腦版限制 */
+  .col-1 { position: sticky; left: 0; z-index: 10; width: 65px; min-width: 65px; background-color: rgba(255,255,255,0.8) !important; backdrop-filter: blur(5px); }
+  .col-2 { position: sticky; left: 65px; z-index: 10; width: 50px; min-width: 50px; background-color: rgba(255,255,255,0.8) !important; backdrop-filter: blur(5px); border-right: 2px solid #1a73e8; }
+  
+  td:not(.col-1):not(.col-2) { max-width: 150px; }
+
+  th.col-1, th.col-2 { background-color: rgba(241,243,244,0.9) !important; z-index: 20; }
+  th { background-color: rgba(241,243,244,0.9); position: sticky; top: 0; z-index: 5; color: #202124; font-weight: 500;}
+
+  .clickable-cell { cursor: pointer; color: #1a73e8; font-weight: bold; text-decoration: none; white-space: nowrap; }
+  .clickable-cell:hover { background-color: rgba(232,240,254,0.8) !important; }
+
+  .footer-spacer { height: 100px; }
+
+  @media (max-width: 600px) { 
+    .form-grid { grid-template-columns: 1fr; } 
+    table { min-width: 650px; } 
+    .table-container { max-width: 100%; }
+    td:not(.col-1):not(.col-2) { max-width: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="budget-container">
+    <h1>升格預算表</h1>
+    <div class="form-grid">
+      <div class="price-wrapper">
+        <div class="label-row">
+          <label>單位幣價（水晶）</label>
+          <div class="quick-coins">
+            <div class="coin-icon-btn" title="MVP預設價" onclick="quickSetPrice('MVP')">
+              <img src="/images/promotion-budget_img_1.png" alt="MVP" onerror="this.style.display='none'">
+            </div>
+            <div class="coin-icon-btn" title="mini預設價" onclick="quickSetPrice('mini')">
+              <img src="/images/promotion-budget_img_2.png" alt="mini" onerror="this.style.display='none'">
+            </div>
+          </div>
+        </div>
+        <div class="price-control">
+          <button class="price-btn" onclick="adjustPrice(-1)">－</button>
+          <input type="number" id="coinPrice" value="144">
+          <button class="price-btn" onclick="adjustPrice(1)">＋</button>
+        </div>
+      </div>
+
+      <div>
+        <label>部位</label>
+        <select id="position">
+          <option value="飾品">飾品</option>
+          <option value="單手武">單手武</option>
+          <option value="副手">副手</option>
+          <option value="雙手武">雙手武</option>
+        </select>
+      </div>
+      <div>
+        <label>原階級</label>
+        <select id="startGrade"></select> 
+      </div>
+      <div>
+        <label>目標階級</label>
+        <select id="targetGrade"></select> 
+      </div>
+      <div style="grid-column: span 2;">
+        <label>庫存幣量</label>
+        <input type="number" id="stock" placeholder="請輸入庫存數量" value="0">
+      </div>
+    </div>
+    <button class="main-calc" onclick="calculateBudget()">計算預算</button>
+    <div class="result" id="result">點擊下方表格數值可自動填入部位、原階級(選定階級-1)、選定目標階級</div>
+  </div>
+
+  <div class="table-container" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);">
+    <div class="table-section-title" style="padding: 20px 0 10px; margin-top: 0;">
+      <h2 style="color: #1a73e8; margin-bottom: 5px; font-size: 20px; font-weight: 500;">需求(分解)材料數量表</h2>
+      <h4 style="color: #5f6368; font-weight: normal; margin-top: 0; padding: 0 10px; font-size: 14px;">括弧內表示分解所得數量，若無則表示升格至此階級的需求數量。</h4>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th class="col-1" style="background-color: rgba(241,243,244,0.9) !important; backdrop-filter: blur(5px);">等級</th>
+          <th class="col-2" style="background-color: rgba(241,243,244,0.9) !important; backdrop-filter: blur(5px);">階級</th>
+          <th style="background-color: rgba(241,243,244,0.9);">飾品 (mini)</th>
+          <th style="background-color: rgba(241,243,244,0.9);">單手武 (MVP)</th>
+          <th style="background-color: rgba(241,243,244,0.9);">副手 (MVP)</th>
+          <th style="background-color: rgba(241,243,244,0.9);">雙手武 (MVP)</th>
+        </tr>
+      </thead>
+      <tbody id="dataTableBody"></tbody>
+    </table>
+  </div>
+  <div class="footer-spacer"></div>
+</main>
+
+<script>
+const QUICK_PRICES = {
+  MVP: 144,
+  mini: 120
+};
+
+const upgradeData = [
+  ["Lv30<br>Lv40", 0, 0, 0, 0, 0, {飾品:"（970）", 雙手武:"（3810）"}],
+  ["Lv50", 1, 3510, 6680, 6020, 12700, {飾品:"（1170）"}],
+  ["Lv60", 2, 5400, 10800, 9900, 20700, {飾品:"（1900）", 雙手武:"（7200）"}],
+  ["Lv70", 3, 6180, 12370, 11130, 23510, {飾品:"（2150）"}],
+  ["Lv80", 4, 7500, 15000, 13500, 28500, {飾品:"（2500）", 副手:"（4500）"}],
+  ["Lv90", 5, 9370, 18750, 16870, 35620, {飾品:"（3125）", 單手武:"（6250）", 雙手武:"（11875）"}],
+  ["Lv100", 6, 11250, 22500, 20252, 42752, {飾品:"（3750）",單手武:"（7500）",雙手武:"（14250）"}],
+  ["Lv110", 7, 13500, 27000, 24300, 51300,{飾品:"（4500）",副手:"（8100）", 雙手武:"（17100）"}],
+  ["Lv120", 8, 15750, 31500, 28350, 59850,{飾品:"（5250）",副手:"（9450）", 雙手武:"（19950）"}]
+];
+
+const priceOptions = [
+  50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 76, 80, 84, 88, 92, 96, 
+  100, 104, 108, 112, 116, 120, 126, 132, 138, 144, 150, 156, 162, 168, 
+  176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 266, 276, 286, 
+  296, 306, 316, 328, 340, 352, 364, 378, 392, 406, 420, 436, 452, 468, 
+  484, 502, 520, 538, 558, 578, 598, 620
+];
+
+const posKeys = ["飾品", "單手武", "副手", "雙手武"];
+
+function init() {
+  const tbody = document.getElementById('dataTableBody');
+  const startSelect = document.getElementById('startGrade');
+  const targetSelect = document.getElementById('targetGrade');
+  
+  upgradeData.forEach((row) => {
+    let tr = document.createElement('tr');
+    let cells = `<td class="col-1">${row[0]}</td><td class="col-2">${row[1]}</td>`;
+    for(let i=0; i<4; i++) {
+      const val = row[i+2];
+      const extra = row[6] && row[6][posKeys[i]] ? `<br><small style="color:#5f6368">${row[6][posKeys[i]]}</small>` : "";
+      const displayVal = val === 0 ? "-" : val.toLocaleString();
+      if(val > 0) {
+        cells += `<td class="clickable-cell" onclick="setCalc('${posKeys[i]}', ${row[1]})">${displayVal}${extra}</td>`;
+      } else {
+        cells += `<td>${displayVal}${extra}</td>`;
+      }
+    }
+    tr.innerHTML = cells;
+    tbody.appendChild(tr);
+    startSelect.options.add(new Option(row[1], row[1]));
+    targetSelect.options.add(new Option(row[1], row[1]));
+  });
+  targetSelect.value = upgradeData[upgradeData.length-1][1];
+}
+
+function quickSetPrice(type) {
+  document.getElementById('coinPrice').value = QUICK_PRICES[type];
+}
+
+function adjustPrice(direction) {
+  const currentVal = parseInt(document.getElementById('coinPrice').value);
+  let currentIndex = priceOptions.findIndex(p => p >= currentVal);
+  if (currentIndex === -1) currentIndex = priceOptions.length - 1;
+  let nextIndex = currentIndex + direction;
+  if (nextIndex < 0) nextIndex = 0;
+  if (nextIndex >= priceOptions.length) nextIndex = priceOptions.length - 1;
+  document.getElementById('coinPrice').value = priceOptions[nextIndex];
+}
+
+function setCalc(pos, grade) {
+  document.getElementById('position').value = pos;
+  document.getElementById('targetGrade').value = grade;
+  document.getElementById('startGrade').value = Math.max(0, grade - 1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function calculateBudget() {
+  const coinPrice = parseFloat(document.getElementById('coinPrice').value) || 0;
+  const position = document.getElementById('position').value;
+  const sGrade = parseInt(document.getElementById('startGrade').value);
+  const tGrade = parseInt(document.getElementById('targetGrade').value);
+  const stock = parseInt(document.getElementById('stock').value) || 0;
+
+  if (sGrade >= tGrade) {
+    document.getElementById('result').innerHTML = "<span style='color:#d93025;'>目標階級必須高於原階級！</span>";
+    return;
+  }
+
+  const posIdx = posKeys.indexOf(position) + 2;
+  let total = 0;
+  upgradeData.forEach(row => {
+    if (row[1] > sGrade && row[1] <= tGrade) {
+      total += row[posIdx];
+    }
+  });
+
+  const needed = Math.max(total - stock, 0);
+  document.getElementById('result').innerHTML = `
+    所需 ${position.includes("飾品") ? 'mini' : 'MVP'} 幣：<b style="color:#202124;">${needed.toLocaleString()}</b><br>
+    預估總預算：<b style="color:#d93025; font-size:1.1rem;">${(needed * coinPrice).toLocaleString()}</b> 水晶
+  `;
+}
+
+// Ensure functions are available globally for onclick attributes
+window.quickSetPrice = quickSetPrice;
+window.adjustPrice = adjustPrice;
+window.setCalc = setCalc;
+window.calculateBudget = calculateBudget;
+
+init();
+</script>
+<script type="module" src="/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RoRDB - 仙境傳說資料庫</title>
+  </head>
+  <body style="background: #f8f9fa;">
+    <!-- 滿版橫幅，漸層延展至下方 -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 95vh; z-index: -1; -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 30%, rgba(0,0,0,0.05) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 30%, rgba(0,0,0,0.05) 100%);">
+      <img src="/images/index_bg_5.png" alt="Hero Banner" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;">
+    </div>
+
+    <!-- 調整 main 的 padding 以免被導航列擋住 -->
+    <main style="padding-top: 100px;">
+      <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: flex-start; margin-top: 120px;">
+        
+        <!-- 左側：Discord 區塊 -->
+        <div style="flex: 1; min-width: 300px; text-align: center; background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-radius: 12px; padding: 40px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid rgba(218,220,224,0.5);">
+          <a href="https://discord.com/invite/Qj2SrUzHAA" target="_blank" style="text-decoration: none; color: inherit; display: inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <img src="/images/index_img_1.png" alt="Discord" style="max-width: 250px; border-radius: 12px;" onerror="this.style.display='none'">
+            <h2 style="margin-top: 20px; color: #1a73e8; font-size: 1.5rem;">Discord</h2>
+            <p style="margin-top: 10px; color: #5f6368; font-weight: 500;">非官方玩家交流群</p>
+          </a>
+        </div>
+
+        <!-- 右側：四格快速連結 -->
+        <div style="flex: 2; min-width: 300px;">
+          <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+            <a href="/card-upgrade.html" class="card">
+              <h2>卡片升星查詢</h2>
+              <p>查詢卡片升星機率。</p>
+            </a>
+            <a href="/promotion-budget.html" class="card">
+              <h2>升格預算計算</h2>
+              <p>試算裝備升格所需與分解的硬幣數量，並支援換算水晶價格。</p>
+            </a>
+            <a href="/enchant-conversion.html" class="card">
+              <h2>附魔轉換表</h2>
+              <p>查閱裝備附魔轉換機率。</p>
+            </a>
+            <a href="/pet-combo.html" class="card">
+              <h2>寵物合體技</h2>
+              <p>寵物組合技能搭配與效果一覽。</p>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <footer>
+      <div style="margin-bottom: 15px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <a href="/index.html" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">首頁</a>
+        <a href="/card-upgrade.html" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">卡片升星查詢</a>
+        <a href="/promotion-budget.html" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">升格預算計算</a>
+        <a href="/enchant-conversion.html" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">附魔轉換表</a>
+        <a href="/pet-combo.html" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">寵物合體技</a>
+      </div>
+      <p>&copy; 2026 RoRDB. Built with Vite.</p>
+    </footer>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

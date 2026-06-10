@@ -1,0 +1,174 @@
+:root {
+  --bg-color: #ffffff;
+  --surface-color: #f8f9fa;
+  --border-color: #dadce0;
+  --primary-color: #1a73e8; /* Google Blue */
+  --text-primary: #202124;
+  --text-secondary: #5f6368;
+  --nav-height: 64px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Google Sans', 'Roboto', 'Noto Sans TC', sans-serif;
+  background: url('/images/card-upgrade_bg_2.png') no-repeat center center fixed;
+  background-size: cover;
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Classic Navbar */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: var(--nav-height);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(218, 220, 224, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,0.1), 0 1px 3px 1px rgba(60,64,67,0.05);
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+nav {
+  position: relative;
+}
+
+.dropdown-toggle {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(218, 220, 224, 0.8);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+ul#nav-links {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  flex-direction: column;
+  padding: 10px 0;
+  min-width: 180px;
+  list-style: none;
+  gap: 0;
+}
+
+nav:hover ul#nav-links, nav:focus-within ul#nav-links {
+  display: flex;
+}
+
+ul#nav-links a {
+  display: block;
+  padding: 10px 20px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s;
+  font-size: 0.95rem;
+}
+
+ul#nav-links a:hover, ul#nav-links a.active {
+  background: rgba(26, 115, 232, 0.1);
+  color: var(--primary-color);
+}
+
+/* Main Content Area */
+main {
+  margin-top: var(--nav-height);
+  padding: 40px 24px;
+  flex: 1;
+  max-width: 1280px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 400;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+p.subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  font-size: 1rem;
+}
+
+/* Classic Cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(218, 220, 224, 0.5);
+  border-radius: 12px;
+  padding: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: var(--primary-color);
+}
+
+.card p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+  font-size: 0.85rem;
+  background-color: var(--surface-color);
+}

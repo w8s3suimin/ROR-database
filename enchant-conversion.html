@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>附魔轉換表 - RoRDB</title>
+  <style>
+    /* 獨立保留該頁面的客製化樣式 */
+    .conversion-container {
+        width: 100%;
+        max-width: 1100px;
+        background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
+        box-shadow: 0 1px 3px 0 rgba(60,64,67,0.3);
+        border: 1px solid #dadce0;
+        border-radius: 8px;
+        margin: 0 auto;
+    }
+
+    .header-title {
+        background-color: #1a73e8;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        font-size: 1.2rem;
+        font-weight: 500;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .header-note {
+        background-color: #8ab4f8;
+        color: #202124;
+        text-align: center;
+        padding: 8px;
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+        border-radius: 0 0 8px 8px;
+    }
+
+    .conversion-container table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        text-align: center;
+        font-size: 0.95rem;
+        min-width: 800px;
+    }
+
+    .conversion-container thead th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+        padding: 12px 8px;
+        font-weight: 600;
+        white-space: nowrap;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 2px solid #1a73e8;
+    }
+
+    .conversion-container tbody td:first-child, 
+    .conversion-container thead th:first-child {
+        background-color: #1a73e8 !important;
+        color: #ffffff !important;
+        font-weight: bold;
+        position: sticky;
+        left: 0;
+        z-index: 5;
+    }
+    
+    .conversion-container thead th:first-child { z-index: 20; border-bottom: 2px solid #1557b0; }
+
+    .conversion-container tbody td {
+        padding: 10px 5px;
+        color: #202124;
+        border-bottom: 1px solid #dadce0;
+        border-right: 1px solid #dadce0;
+    }
+
+    .conversion-container tbody tr:nth-child(even) td { background-color: #f8f9fa; }
+
+    /* 深色欄位設定 */
+    .conversion-container tbody td:nth-child(7),
+    .conversion-container tbody td:nth-child(8),
+    .conversion-container tbody td:nth-child(9) {
+        background-color: #f1f3f4 !important;
+        color: #202124;
+        border-left: 2px solid #dadce0;
+    }
+    
+    .conversion-container thead th:nth-child(7),
+    .conversion-container thead th:nth-child(8),
+    .conversion-container thead th:nth-child(9) {
+        background-color: #d2e3fc;
+    }
+
+    .conversion-container tbody tr:hover td:not(:first-child) { background-color: #e8f0fe !important; }
+    
+    .conversion-container tbody tr:hover td:first-child {
+         background-color: #1557b0 !important;
+         color: #ffffff !important;
+    }
+
+    @media (max-width: 600px) {
+        .header-title { font-size: 1rem; }
+        .header-note { font-size: 0.8rem; }
+        .conversion-container td, .conversion-container th { padding: 8px 4px; }
+    }
+  </style>
+</head>
+<body style="background: url('/images/card-upgrade_bg_1.png') no-repeat center center fixed; background-size: cover;">
+<main>
+  <div class="conversion-container">
+      <div class="header-title">
+          雙手武*3 / 單手武、衣服*2 / 其他*1
+      </div>
+      <div class="header-note">
+          *轉換時新區等級為原舊區等級-3<br>
+          (深色區域轉換 Lv&lt;10 : -1等 ; Lv≥10 : -2等)
+      </div>
+
+      <div class="table-wrapper">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Lv</th>
+                      <th>普轉夢</th>
+                      <th>夢轉艾</th>
+                      <th>艾轉斐</th>
+                      <th>斐轉吉</th>
+                      <th>吉轉古</th>
+                      <th>古轉鐘</th>
+                      <th>鐘轉要塞</th>
+                      <th>要塞轉盧恩</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr><td>4</td><td>4</td><td>2</td><td>4</td><td>2</td><td>2</td><td></td><td></td><td></td></tr>
+                  <tr><td>5</td><td>4</td><td>2</td><td>4</td><td>6</td><td>6</td><td>2</td><td>2</td><td>2</td></tr>
+                  <tr><td>6</td><td>4</td><td>2</td><td>4</td><td>8</td><td>8</td><td>2</td><td>2</td><td>2</td></tr>
+                  <tr><td>7</td><td>4</td><td>2</td><td>4</td><td>2</td><td>2</td><td>6</td><td>6</td><td>6</td></tr>
+                  <tr><td>8</td><td>4</td><td>2</td><td>4</td><td>8</td><td>8</td><td>8</td><td>8</td><td>8</td></tr>
+                  <tr><td>9</td><td>4</td><td>2</td><td>4</td><td>12</td><td>12</td><td>12</td><td>12</td><td>12</td></tr>
+                  <tr><td>10</td><td>6</td><td>4</td><td>4</td><td>6</td><td>6</td><td>4</td><td>4</td><td>4</td></tr>
+                  <tr><td>11</td><td>12</td><td>8</td><td>4</td><td>10</td><td>10</td><td>6</td><td>6</td><td>6</td></tr>
+                  <tr><td>12</td><td>16</td><td>14</td><td>4</td><td>14</td><td>14</td><td>10</td><td>10</td><td>10</td></tr>
+                  <tr><td>13</td><td>22</td><td>18</td><td>4</td><td>20</td><td>20</td><td>12</td><td>12</td><td>12</td></tr>
+                  <tr><td>14</td><td>26</td><td>22</td><td>4</td><td>24</td><td>24</td><td>16</td><td>16</td><td>16</td></tr>
+                  <tr><td>15</td><td>32</td><td>28</td><td>4</td><td>30</td><td>30</td><td>18</td><td>18</td><td>18</td></tr>
+                  <tr><td>16</td><td>26</td><td>10</td><td></td><td>24</td><td>24</td><td>8</td><td>8</td><td>8</td></tr>
+                  <tr><td>17</td><td>20</td><td>4</td><td></td><td>18</td><td>18</td><td>2</td><td>2</td><td>2</td></tr>
+                  <tr><td>18</td><td>10</td><td>2</td><td></td><td>10</td><td>10</td><td>2</td><td>2</td><td>2</td></tr>
+                  <tr><td>19</td><td></td><td></td><td></td><td>20</td><td>20</td><td>6</td><td>6</td><td>6</td></tr>
+                  <tr><td>20</td><td></td><td></td><td></td><td>30</td><td>30</td><td></td><td></td><td></td></tr>
+                  <tr><td>21</td><td></td><td></td><td></td><td>44</td><td>44</td><td>18</td><td></td><td></td></tr>
+                  <tr><td>22</td><td></td><td></td><td></td><td>60</td><td>60</td><td></td><td></td><td></td></tr>
+                  <tr><td>23</td><td></td><td></td><td></td><td>72</td><td>72</td><td></td><td></td><td></td></tr>
+                  <tr><td>24</td><td></td><td></td><td></td><td>104</td><td>108</td><td></td><td></td><td></td></tr>
+                  <tr><td>25</td><td></td><td></td><td></td><td>82</td><td>84</td><td></td><td></td><td></td></tr>
+                  <tr><td>26</td><td></td><td></td><td></td><td>50</td><td>50</td><td></td><td></td><td></td></tr>
+                  <tr><td>27</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                  <tr><td>28</td><td></td><td></td><td></td><td></td><td>52</td><td></td><td></td><td></td></tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</main>
+<script type="module" src="/main.js"></script>
+</body>
+</html>

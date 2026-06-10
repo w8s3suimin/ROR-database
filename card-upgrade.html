@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>卡片升星查詢 - RoRDB</title>
+  <style>
+    /* 獨立保留該頁面的客製化樣式 */
+    .upgrade-tool-container {
+      background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-radius: 12px; padding: 30px;
+      max-width: 500px; margin: 0 auto; box-shadow: 0 1px 3px 0 rgba(60,64,67,0.3); border: 1px solid #dadce0;
+    }
+    .upgrade-tool-container h1 { font-size: 22px; text-align: center; color: #1a73e8; margin-bottom: 20px; font-weight: 500; }
+    .upgrade-tool-container label { display: block; font-weight: bold; margin: 12px 0 5px; color: #3c4043; font-size: 0.95rem; }
+    .upgrade-tool-container select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; margin-bottom: 10px; min-height: 41px; box-sizing: border-box; }
+    
+    .row { display: flex; gap: 10px; }
+    .row > div { flex: 1; }
+
+    .button-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+    .upgrade-tool-container button { background-color: #1a73e8; color: white; font-weight: bold; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; transition: background 0.2s; }
+    .upgrade-tool-container button:hover { background-color: #1557b0; }
+    .result { margin-top: 20px; background: #e8f0fe; border: 1px solid #d2e3fc; border-radius: 8px; padding: 15px; font-size: 16px; color: #1a73e8; min-height: 54px; line-height: 1.5; font-weight: 500;}
+    .polly-animated { width: 48px; height: 48px; animation: bounce 1.2s infinite; }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="upgrade-tool-container">
+      <h1>卡片升星機率查詢</h1>
+
+      <label for="original">原卡名稱</label>
+      <select id="original">
+        <option value="普10">普10</option><option value="普20">普20</option><option value="普30">普30</option>
+        <option value="普40">普40</option><option value="普50">普50</option><option value="普60">普60</option>
+        <option value="普70">普70</option><option value="普80">普80</option><option value="普90">普90</option>
+        <option value="普100">普100</option><option value="普110">普110</option>
+        <option value="王30">王30</option><option value="王40">王40</option><option value="王50">王50</option>
+        <option value="王60">王60</option><option value="王70">王70</option><option value="王80">王80</option>
+        <option value="王90">王90</option><option value="王100">王100</option><option value="王110">王110</option>
+        <option value="生肖卡片．蛇">生肖卡片．蛇</option><option value="年獸卡片">年獸卡片</option>
+        <option value="糖糖卡片">糖糖卡片</option><option value="黑豆爵士卡片">黑豆爵士卡片</option>
+        <option value="狸之助卡片">狸之助卡片</option><option value="魯道夫二世卡片">魯道夫二世卡片</option>
+        <option value="邦尼卡片">邦尼卡片</option><option value="膽小的獅子卡片">膽小的獅子卡片</option>
+        <option value="B.Duck卡片">B.Duck卡片</option><option value="速通王小跳卡片">速通王小跳卡片</option>
+        <option value="派派卡片">派派卡片</option><option value="帕㗳啪卡卡片">帕㗳啪卡卡片</option>
+        <option value="卡律布狄斯卡片">卡律布狄斯卡片</option><option value="月兔親友團卡片">月兔親友團卡片</option>
+        <option value="夏夢咩咩卡片">夏夢咩咩卡片</option><option value="八分音符卡片">八分音符卡片</option>
+        <option value="鵲橋相會卡片">鵲橋相會卡片</option><option value="危機時刻卡片">危機時刻卡片</option>
+        <option value="颶風之盾卡片">颶風之盾卡片</option><option value="學院畢業式卡片">學院畢業式卡片</option>
+        <option value="年獸寶寶卡片">年獸寶寶卡片</option>
+      </select>
+
+      <div class="row">
+        <div>
+          <label for="oStar">原卡星數</label>
+          <select id="oStar">
+            <option value="1">1 星</option><option value="2">2 星</option><option value="3">3 星</option><option value="4">4 星</option>
+          </select>
+        </div>
+        <div>
+          <label for="oTier">原卡階級</label>
+          <select id="oTier">
+            <option value="1">I 階</option>
+            <option value="2">II 階</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="material">材料卡名稱</label>
+      <select id="material">
+        <option value="普10">普10</option>
+      </select>
+
+      <label for="mStar">材料星數</label>
+      <select id="mStar">
+        <option value="1">1 星</option><option value="2">2 星</option><option value="3">3 星</option><option value="4">4 星</option><option value="5">5 星</option>
+      </select>
+
+      <div class="button-container">
+        <button id="checkBtn">查詢升星機率</button>
+        <img src="/images/card-upgrade_img_1.png" alt="波利" class="polly-animated" onerror="this.style.display='none'" />
+      </div>
+
+      <div id="result" class="result">歡迎使用！</div>
+    </div>
+  </main>
+
+  <script>
+    const API_BASE = "https://script.google.com/macros/s/AKfycbxv0-varG3c3dAHBLcUrXWwECxyT5YVeyA-qm-l4_ao8UpCWrdFxTPYpJmeF4t9hTx1/exec";
+
+    let cardMap = {
+      "普10":840,"普20":1050,"普30":1260,"普40":1470,"普50":1680,"普60":2100,"普70":2660,"普80":3500,"普90":4900,"普100":7000,"普110":9800,
+      "王30":6300,"王40":7350,"王50":8400,"王60":10500,"王70":13300,"王80":17500,"王90":24500,"王100":35000,"王110":49000,
+      "生肖卡片．蛇":13300,"年獸卡片":13300,"糖糖卡片":13300,"黑豆爵士卡片":13300,"狸之助卡片":10500,"魯道夫二世卡片":10500,
+      "邦尼卡片":13300,"膽小的獅子卡片":13300,"B.Duck卡片":13300,"速通王小跳卡片":13300,"派派卡片":13300,"帕㗳啪卡卡片":17500,
+      "卡律布狄斯卡片":13300,"月兔親友團卡片":13300,"夏夢咩咩卡片":17500,"八分音符卡片":17500,"鵲橋相會卡片":17500,
+      "危機時刻卡片":13300,"颶風之盾卡片":17500,"學院畢業式卡片":7,"年獸寶寶卡片":2660
+    };
+
+    function getMultiplier(star) {
+      switch (parseInt(star)) {
+        case 1: return 1;
+        case 2: return 2;
+        case 3: return 2 * 19 / 9;
+        case 4: return 2 * 19 * 18 / 9 / 8;
+        case 5: return 2 * 19 * 18 * 17 / 9 / 8 / 7;
+        default: return null;
+      }
+    }
+
+    function updateUI(names) {
+      const oSel = document.getElementById("original");
+      const mSel = document.getElementById("material");
+      const curO = oSel.value, curM = mSel.value;
+      const html = names.map(n => `<option value="${n}">${n}</option>`).join('');
+      oSel.innerHTML = html; mSel.innerHTML = html;
+      if (curO && names.includes(curO)) oSel.value = curO;
+      if (curM && names.includes(curM)) mSel.value = curM;
+    }
+
+    async function syncData() {
+      try {
+        const res = await fetch(`${API_BASE}?action=getCardData&t=${Date.now()}`);
+        const data = await res.json();
+        if (data.map) {
+          cardMap = data.map;
+          updateUI(Object.keys(cardMap));
+          console.log("資料同步完成");
+        }
+      } catch (e) { console.warn("同步失敗，使用預載資料"); }
+    }
+
+    function queryLocalRate() {
+      const fromName = document.getElementById("original").value;
+      const fromStar = parseInt(document.getElementById("oStar").value);
+      const tierDivisor = parseInt(document.getElementById("oTier").value); 
+      
+      const toName = document.getElementById("material").value;
+      const toStar = parseInt(document.getElementById("mStar").value);
+
+      const fromWeight = cardMap[fromName];
+      const toWeight = cardMap[toName];
+      const fromBefore = getMultiplier(fromStar);
+      const fromAfter = getMultiplier(fromStar + 1);
+      const m = getMultiplier(toStar);
+      const resultDiv = document.getElementById("result");
+
+      if (!fromWeight || !toWeight || !fromBefore || !fromAfter || !m) {
+        resultDiv.innerHTML = `❌ 資料載入中...`;
+        return;
+      }
+
+      const denominator = fromWeight * (fromAfter - fromBefore);
+      if (denominator === 0) {
+        resultDiv.innerHTML = `❌ 分母為 0，無法計算`;
+        return;
+      }
+
+      const rawRate = (toWeight * m) / denominator;
+      
+      const sameNameRate = (rawRate * 100).toFixed(4);
+      const diffNameRate = ((rawRate / 5 / tierDivisor) * 100).toFixed(4);
+
+      if (fromName === toName) {
+        resultDiv.innerHTML = `同名卡片成功率：${sameNameRate}%<br/>不同名卡片成功率：${diffNameRate}%`;
+      } else {
+        resultDiv.innerHTML = `不同名卡片成功率：${diffNameRate}%`;
+      }
+    }
+
+    document.getElementById("checkBtn").onclick = queryLocalRate;
+    syncData();
+  </script>
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
