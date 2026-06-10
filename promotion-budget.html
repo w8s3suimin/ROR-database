@@ -36,15 +36,20 @@
   .table-section-title h4 { color: #5f6368; font-weight: normal; margin-top: 0; padding: 0 10px; font-size: 14px;}
 
   /* --- 表格容器優化 --- */
-  .table-container { 
-    overflow-x: auto; 
-    -webkit-overflow-scrolling: touch;
+  .table-wrapper {
     border: 1px solid rgba(218, 220, 224, 0.5);
     border-radius: 12px;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
     max-width: 900px;
     margin: 40px auto 0;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    overflow: hidden;
+  }
+  .table-container { 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
   }
   table { width: 100%; border-collapse: separate; border-spacing: 0; }
   th, td { border-bottom: 1px solid #ddd; border-right: 1px solid #ddd; padding: 12px 10px; text-align: center; background-color: rgba(255,255,255,0.7); font-size: 15px; }
@@ -66,7 +71,7 @@
   @media (max-width: 600px) { 
     .form-grid { grid-template-columns: 1fr; } 
     table { min-width: 650px; } 
-    .table-container { max-width: 100%; }
+    .table-wrapper { max-width: 100%; }
     td:not(.col-1):not(.col-2) { max-width: none; }
   }
 </style>
@@ -121,24 +126,26 @@
     <div class="result" id="result">點擊下方表格數值可自動填入部位、原階級(選定階級-1)、選定目標階級</div>
   </div>
 
-  <div class="table-container" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);">
+  <div class="table-wrapper">
     <div class="table-section-title" style="padding: 20px 0 10px; margin-top: 0;">
       <h2 style="color: #1a73e8; margin-bottom: 5px; font-size: 20px; font-weight: 500;">需求(分解)材料數量表</h2>
       <h4 style="color: #5f6368; font-weight: normal; margin-top: 0; padding: 0 10px; font-size: 14px;">括弧內表示分解所得數量，若無則表示升格至此階級的需求數量。</h4>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th class="col-1" style="background-color: rgba(241,243,244,0.9) !important; backdrop-filter: blur(5px);">等級</th>
-          <th class="col-2" style="background-color: rgba(241,243,244,0.9) !important; backdrop-filter: blur(5px);">階級</th>
-          <th style="background-color: rgba(241,243,244,0.9);">飾品 (mini)</th>
-          <th style="background-color: rgba(241,243,244,0.9);">單手武 (MVP)</th>
-          <th style="background-color: rgba(241,243,244,0.9);">副手 (MVP)</th>
-          <th style="background-color: rgba(241,243,244,0.9);">雙手武 (MVP)</th>
-        </tr>
-      </thead>
-      <tbody id="dataTableBody"></tbody>
-    </table>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-1" style="background-color: rgba(241,243,244,0.9) !important; backdrop-filter: blur(5px);">等級</th>
+            <th class="col-2" style="background-color: rgba(241,243,244,0.9) !important; backdrop-filter: blur(5px);">階級</th>
+            <th style="background-color: rgba(241,243,244,0.9);">飾品 (mini)</th>
+            <th style="background-color: rgba(241,243,244,0.9);">單手武 (MVP)</th>
+            <th style="background-color: rgba(241,243,244,0.9);">副手 (MVP)</th>
+            <th style="background-color: rgba(241,243,244,0.9);">雙手武 (MVP)</th>
+          </tr>
+        </thead>
+        <tbody id="dataTableBody"></tbody>
+      </table>
+    </div>
   </div>
   <div class="footer-spacer"></div>
 </main>

@@ -1,0 +1,277 @@
+﻿{
+    "普10":  {
+                "weight":  840,
+                "category":  "普卡",
+                "displayName":  "Lv10"
+            },
+    "普20":  {
+                "weight":  1050,
+                "category":  "普卡",
+                "displayName":  "Lv20"
+            },
+    "普30":  {
+                "weight":  1260,
+                "category":  "普卡",
+                "displayName":  "Lv30"
+            },
+    "普40":  {
+                "weight":  1469.9999999999998,
+                "category":  "普卡",
+                "displayName":  "Lv40"
+            },
+    "普50":  {
+                "weight":  1680,
+                "category":  "普卡",
+                "displayName":  "Lv50"
+            },
+    "普60":  {
+                "weight":  2100,
+                "category":  "普卡",
+                "displayName":  "Lv60"
+            },
+    "普70":  {
+                "weight":  2660,
+                "category":  "普卡",
+                "displayName":  "Lv70"
+            },
+    "普80":  {
+                "weight":  3500,
+                "category":  "普卡",
+                "displayName":  "Lv80"
+            },
+    "普90":  {
+                "weight":  4900,
+                "category":  "普卡",
+                "displayName":  "Lv90"
+            },
+    "普100":  {
+                 "weight":  7000,
+                 "category":  "普卡",
+                 "displayName":  "Lv100"
+             },
+    "普110":  {
+                 "weight":  9800,
+                 "category":  "普卡",
+                 "displayName":  "Lv110"
+             },
+    "普120":  {
+                 "weight":  11760,
+                 "category":  "普卡",
+                 "displayName":  "Lv120"
+             },
+    "王30":  {
+                "weight":  6299.999999999999,
+                "category":  "王卡",
+                "displayName":  "Lv30"
+            },
+    "王40":  {
+                "weight":  7350,
+                "category":  "王卡",
+                "displayName":  "Lv40"
+            },
+    "王50":  {
+                "weight":  8400,
+                "category":  "王卡",
+                "displayName":  "Lv50"
+            },
+    "王60":  {
+                "weight":  10500,
+                "category":  "王卡",
+                "displayName":  "Lv60"
+            },
+    "王70":  {
+                "weight":  13300,
+                "category":  "王卡",
+                "displayName":  "Lv70"
+            },
+    "王80":  {
+                "weight":  17500,
+                "category":  "王卡",
+                "displayName":  "Lv80"
+            },
+    "王90":  {
+                "weight":  24499.999999999996,
+                "category":  "王卡",
+                "displayName":  "Lv90"
+            },
+    "王100":  {
+                 "weight":  35000,
+                 "category":  "王卡",
+                 "displayName":  "Lv100"
+             },
+    "王110":  {
+                 "weight":  49000,
+                 "category":  "王卡",
+                 "displayName":  "Lv110"
+             },
+    "王120":  {
+                 "weight":  58800,
+                 "category":  "王卡",
+                 "displayName":  "Lv120"
+             },
+    "生肖卡片．蛇":  {
+                   "weight":  13300,
+                   "category":  "活動卡",
+                   "displayName":  "生肖卡片．蛇"
+               },
+    "年獸卡片":  {
+                 "weight":  13300,
+                 "category":  "活動卡",
+                 "displayName":  "年獸卡片"
+             },
+    "糖糖卡片":  {
+                 "weight":  13300,
+                 "category":  "活動卡",
+                 "displayName":  "糖糖卡片"
+             },
+    "黑豆爵士卡片":  {
+                   "weight":  13300,
+                   "category":  "活動卡",
+                   "displayName":  "黑豆爵士卡片"
+               },
+    "狸之助卡片":  {
+                  "weight":  10500,
+                  "category":  "活動卡",
+                  "displayName":  "狸之助卡片"
+              },
+    "魯道夫二世卡片":  {
+                    "weight":  10500,
+                    "category":  "活動卡",
+                    "displayName":  "魯道夫二世卡片"
+                },
+    "邦尼卡片":  {
+                 "weight":  13300,
+                 "category":  "活動卡",
+                 "displayName":  "邦尼卡片"
+             },
+    "膽小的獅子卡片":  {
+                    "weight":  13300,
+                    "category":  "活動卡",
+                    "displayName":  "膽小的獅子卡片"
+                },
+    "B.Duck卡片":  {
+                     "weight":  13300,
+                     "category":  "活動卡",
+                     "displayName":  "B.Duck卡片"
+                 },
+    "速通王小跳卡片":  {
+                    "weight":  13300,
+                    "category":  "活動卡",
+                    "displayName":  "速通王小跳卡片"
+                },
+    "派派卡片":  {
+                 "weight":  13300,
+                 "category":  "活動卡",
+                 "displayName":  "派派卡片"
+             },
+    "帕㗳啪卡卡片":  {
+                   "weight":  17500,
+                   "category":  "活動卡",
+                   "displayName":  "帕㗳啪卡卡片"
+               },
+    "卡律布狄斯卡片":  {
+                    "weight":  13300,
+                    "category":  "活動卡",
+                    "displayName":  "卡律布狄斯卡片"
+                },
+    "月兔親友團卡片":  {
+                    "weight":  13300,
+                    "category":  "活動卡",
+                    "displayName":  "月兔親友團卡片"
+                },
+    "夏夢咩咩卡片":  {
+                   "weight":  17500,
+                   "category":  "活動卡",
+                   "displayName":  "夏夢咩咩卡片"
+               },
+    "八分音符卡片":  {
+                   "weight":  17500,
+                   "category":  "活動卡",
+                   "displayName":  "八分音符卡片"
+               },
+    "鵲橋相會卡片":  {
+                   "weight":  17500,
+                   "category":  "活動卡",
+                   "displayName":  "鵲橋相會卡片"
+               },
+    "危機時刻卡片":  {
+                   "weight":  13300,
+                   "category":  "活動卡",
+                   "displayName":  "危機時刻卡片"
+               },
+    "颶風之盾卡片":  {
+                   "weight":  17500,
+                   "category":  "活動卡",
+                   "displayName":  "颶風之盾卡片"
+               },
+    "超級雪人卡片":  {
+                   "weight":  24500,
+                   "category":  "活動卡",
+                   "displayName":  "超級雪人卡片"
+               },
+    "大雪寶卡片":  {
+                  "weight":  24500,
+                  "category":  "活動卡",
+                  "displayName":  "大雪寶卡片"
+              },
+    "甜夢一號卡片":  {
+                   "weight":  17500,
+                   "category":  "活動卡",
+                   "displayName":  "甜夢一號卡片"
+               },
+    "賽尼亞卡片":  {
+                  "weight":  35000,
+                  "category":  "活動卡",
+                  "displayName":  "賽尼亞卡片"
+              },
+    "阿芙蘿黛卡片":  {
+                   "weight":  35000,
+                   "category":  "活動卡",
+                   "displayName":  "阿芙蘿黛卡片"
+               },
+    "錦市新春卡片":  {
+                   "weight":  35000,
+                   "category":  "活動卡",
+                   "displayName":  "錦市新春卡片"
+               },
+    "生肖卡片．馬(設定為II階)":  {
+                           "weight":  35000,
+                           "category":  "活動卡",
+                           "displayName":  "生肖卡片．馬(設定為II階)"
+                       },
+    "娣潔卡片":  {
+                 "weight":  35000,
+                 "category":  "活動卡",
+                 "displayName":  "娣潔卡片"
+             },
+    "特莉絲卡片":  {
+                  "weight":  35000,
+                  "category":  "活動卡",
+                  "displayName":  "特莉絲卡片"
+              },
+    "波利大航海卡片":  {
+                    "weight":  35000,
+                    "category":  "活動卡",
+                    "displayName":  "波利大航海卡片"
+                },
+    "克仔卡片":  {
+                 "weight":  35000,
+                 "category":  "活動卡",
+                 "displayName":  "克仔卡片"
+             },
+    "賽依連卡片":  {
+                  "weight":  49000,
+                  "category":  "活動卡",
+                  "displayName":  "賽依連卡片"
+              },
+    "學院畢業式卡片":  {
+                    "weight":  7,
+                    "category":  "特殊卡",
+                    "displayName":  "學院畢業式卡片"
+                },
+    "年獸寶寶卡片":  {
+                   "weight":  2660,
+                   "category":  "特殊卡",
+                   "displayName":  "年獸寶寶卡片"
+               }
+}

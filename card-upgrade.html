@@ -30,27 +30,16 @@
     <div class="upgrade-tool-container">
       <h1>卡片升星機率查詢</h1>
 
-      <label for="original">原卡名稱</label>
-      <select id="original">
-        <option value="普10">普10</option><option value="普20">普20</option><option value="普30">普30</option>
-        <option value="普40">普40</option><option value="普50">普50</option><option value="普60">普60</option>
-        <option value="普70">普70</option><option value="普80">普80</option><option value="普90">普90</option>
-        <option value="普100">普100</option><option value="普110">普110</option>
-        <option value="王30">王30</option><option value="王40">王40</option><option value="王50">王50</option>
-        <option value="王60">王60</option><option value="王70">王70</option><option value="王80">王80</option>
-        <option value="王90">王90</option><option value="王100">王100</option><option value="王110">王110</option>
-        <option value="生肖卡片．蛇">生肖卡片．蛇</option><option value="年獸卡片">年獸卡片</option>
-        <option value="糖糖卡片">糖糖卡片</option><option value="黑豆爵士卡片">黑豆爵士卡片</option>
-        <option value="狸之助卡片">狸之助卡片</option><option value="魯道夫二世卡片">魯道夫二世卡片</option>
-        <option value="邦尼卡片">邦尼卡片</option><option value="膽小的獅子卡片">膽小的獅子卡片</option>
-        <option value="B.Duck卡片">B.Duck卡片</option><option value="速通王小跳卡片">速通王小跳卡片</option>
-        <option value="派派卡片">派派卡片</option><option value="帕㗳啪卡卡片">帕㗳啪卡卡片</option>
-        <option value="卡律布狄斯卡片">卡律布狄斯卡片</option><option value="月兔親友團卡片">月兔親友團卡片</option>
-        <option value="夏夢咩咩卡片">夏夢咩咩卡片</option><option value="八分音符卡片">八分音符卡片</option>
-        <option value="鵲橋相會卡片">鵲橋相會卡片</option><option value="危機時刻卡片">危機時刻卡片</option>
-        <option value="颶風之盾卡片">颶風之盾卡片</option><option value="學院畢業式卡片">學院畢業式卡片</option>
-        <option value="年獸寶寶卡片">年獸寶寶卡片</option>
-      </select>
+      <div class="row">
+        <div>
+          <label for="oCategory">原卡分類</label>
+          <select id="oCategory"></select>
+        </div>
+        <div>
+          <label for="original">原卡名稱</label>
+          <select id="original"></select>
+        </div>
+      </div>
 
       <div class="row">
         <div>
@@ -68,10 +57,16 @@
         </div>
       </div>
 
-      <label for="material">材料卡名稱</label>
-      <select id="material">
-        <option value="普10">普10</option>
-      </select>
+      <div class="row">
+        <div>
+          <label for="mCategory">材料卡分類</label>
+          <select id="mCategory"></select>
+        </div>
+        <div>
+          <label for="material">材料卡名稱</label>
+          <select id="material"></select>
+        </div>
+      </div>
 
       <label for="mStar">材料星數</label>
       <select id="mStar">
@@ -88,16 +83,9 @@
   </main>
 
   <script>
-    const API_BASE = "https://script.google.com/macros/s/AKfycbxv0-varG3c3dAHBLcUrXWwECxyT5YVeyA-qm-l4_ao8UpCWrdFxTPYpJmeF4t9hTx1/exec";
+    const API_BASE = "https://script.google.com/macros/s/AKfycbw5xG6Xf7QZr_1pCF_hP4UF_c2OFtLQQdTcOWfL_6XbtiLx9iWas77CP0-OUgcmbDta/exec";
 
-    let cardMap = {
-      "普10":840,"普20":1050,"普30":1260,"普40":1470,"普50":1680,"普60":2100,"普70":2660,"普80":3500,"普90":4900,"普100":7000,"普110":9800,
-      "王30":6300,"王40":7350,"王50":8400,"王60":10500,"王70":13300,"王80":17500,"王90":24500,"王100":35000,"王110":49000,
-      "生肖卡片．蛇":13300,"年獸卡片":13300,"糖糖卡片":13300,"黑豆爵士卡片":13300,"狸之助卡片":10500,"魯道夫二世卡片":10500,
-      "邦尼卡片":13300,"膽小的獅子卡片":13300,"B.Duck卡片":13300,"速通王小跳卡片":13300,"派派卡片":13300,"帕㗳啪卡卡片":17500,
-      "卡律布狄斯卡片":13300,"月兔親友團卡片":13300,"夏夢咩咩卡片":17500,"八分音符卡片":17500,"鵲橋相會卡片":17500,
-      "危機時刻卡片":13300,"颶風之盾卡片":17500,"學院畢業式卡片":7,"年獸寶寶卡片":2660
-    };
+    let cardMap = {};
 
     function getMultiplier(star) {
       switch (parseInt(star)) {
@@ -110,26 +98,64 @@
       }
     }
 
-    function updateUI(names) {
-      const oSel = document.getElementById("original");
-      const mSel = document.getElementById("material");
-      const curO = oSel.value, curM = mSel.value;
-      const html = names.map(n => `<option value="${n}">${n}</option>`).join('');
-      oSel.innerHTML = html; mSel.innerHTML = html;
-      if (curO && names.includes(curO)) oSel.value = curO;
-      if (curM && names.includes(curM)) mSel.value = curM;
+    function updateUI() {
+      if (Object.keys(cardMap).length === 0) return;
+      
+      const categories = [...new Set(Object.values(cardMap).map(c => c.category).filter(Boolean))];
+      
+      const oCat = document.getElementById("oCategory");
+      const mCat = document.getElementById("mCategory");
+      const curOCat = oCat.value, curMCat = mCat.value;
+      
+      const catHtml = categories.map(c => `<option value="${c}">${c}</option>`).join('');
+      oCat.innerHTML = catHtml;
+      mCat.innerHTML = catHtml;
+      
+      if (curOCat && categories.includes(curOCat)) oCat.value = curOCat;
+      if (curMCat && categories.includes(curMCat)) mCat.value = curMCat;
+
+      updateCardDropdown("oCategory", "original");
+      updateCardDropdown("mCategory", "material");
     }
 
-    async function syncData() {
+    function updateCardDropdown(catId, cardId) {
+      const cat = document.getElementById(catId).value;
+      const cardSel = document.getElementById(cardId);
+      const curCard = cardSel.value;
+      
+      const cardsInCategory = Object.entries(cardMap).filter(([k, v]) => v.category === cat);
+      const html = cardsInCategory.map(([k, v]) => `<option value="${k}">${v.displayName}</option>`).join('');
+      cardSel.innerHTML = html;
+      
+      if (curCard && cardsInCategory.some(([k]) => k === curCard)) {
+        cardSel.value = curCard;
+      }
+    }
+
+    document.getElementById("oCategory").addEventListener("change", () => updateCardDropdown("oCategory", "original"));
+    document.getElementById("mCategory").addEventListener("change", () => updateCardDropdown("mCategory", "material"));
+
+    async function initData() {
+      // 1. 靜默載入本地 JSON 作為基礎資料 (非常快)
       try {
-        const res = await fetch(`${API_BASE}?action=getCardData&t=${Date.now()}`);
+        const localRes = await fetch(`/data/cards.json?t=${Date.now()}`);
+        const localData = await localRes.json();
+        if (localData) {
+          cardMap = localData;
+          updateUI();
+        }
+      } catch (e) { console.warn("讀取本地預載資料失敗", e); }
+
+      // 2. 背景即時向 Google 取得最新資料
+      try {
+        const res = await fetch(`${API_BASE}?action=getCardDataV2&t=${Date.now()}`);
         const data = await res.json();
         if (data.map) {
           cardMap = data.map;
-          updateUI(Object.keys(cardMap));
-          console.log("資料同步完成");
+          updateUI();
+          console.log("背景即時同步 Google 資料完成");
         }
-      } catch (e) { console.warn("同步失敗，使用預載資料"); }
+      } catch (e) { console.warn("即時同步失敗，維持使用本地資料", e); }
     }
 
     function queryLocalRate() {
@@ -140,8 +166,8 @@
       const toName = document.getElementById("material").value;
       const toStar = parseInt(document.getElementById("mStar").value);
 
-      const fromWeight = cardMap[fromName];
-      const toWeight = cardMap[toName];
+      const fromWeight = cardMap[fromName]?.weight;
+      const toWeight = cardMap[toName]?.weight;
       const fromBefore = getMultiplier(fromStar);
       const fromAfter = getMultiplier(fromStar + 1);
       const m = getMultiplier(toStar);
@@ -160,8 +186,14 @@
 
       const rawRate = (toWeight * m) / denominator;
       
-      const sameNameRate = (rawRate * 100).toFixed(4);
-      const diffNameRate = ((rawRate / 5 / tierDivisor) * 100).toFixed(4);
+      let sameRateNum = rawRate * 100;
+      let diffRateNum = (rawRate / 5 / tierDivisor) * 100;
+
+      if (sameRateNum > 100) sameRateNum = 100;
+      if (diffRateNum > 100) diffRateNum = 100;
+
+      const sameNameRate = sameRateNum.toFixed(4);
+      const diffNameRate = diffRateNum.toFixed(4);
 
       if (fromName === toName) {
         resultDiv.innerHTML = `同名卡片成功率：${sameNameRate}%<br/>不同名卡片成功率：${diffNameRate}%`;
@@ -171,7 +203,7 @@
     }
 
     document.getElementById("checkBtn").onclick = queryLocalRate;
-    syncData();
+    initData();
   </script>
   <script type="module" src="/main.js"></script>
 </body>
