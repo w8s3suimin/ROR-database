@@ -11,6 +11,7 @@ const navHTML = `
       <li><a href="/promotion-budget.html">升格預算計算</a></li>
       <li><a href="/enchant-conversion.html">附魔轉換表</a></li>
       <li><a href="/pet-combo.html">寵物合體技</a></li>
+      <li><a href="/block-puzzle.html">積木大作戰 <span style="background: #e53935; color: #fff; font-size: 11px; padding: 2px 6px; border-radius: 10px; margin-left: 4px; font-weight: bold;">限時</span></a></li>
     </ul>
   </nav>
 `;
@@ -24,7 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentPath = window.location.pathname;
   const links = document.querySelectorAll('#nav-links a');
   links.forEach(link => {
-    if (link.getAttribute('href') === currentPath || (currentPath === '/' && link.getAttribute('href') === '/index.html')) {
+    const href = link.getAttribute('href');
+    if (href === currentPath || (currentPath === '/' && href === '/index.html') || (href && currentPath.endsWith(href))) {
       link.classList.add('active');
     }
   });

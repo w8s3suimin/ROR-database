@@ -17,7 +17,8 @@ export default defineConfig({
         cardUpgrade: resolve(__dirname, 'card-upgrade.html'),
         promotionBudget: resolve(__dirname, 'promotion-budget.html'),
         enchantConversion: resolve(__dirname, 'enchant-conversion.html'),
-        petCombo: resolve(__dirname, 'pet-combo.html')
+        petCombo: resolve(__dirname, 'pet-combo.html'),
+        blockPuzzle: resolve(__dirname, 'block-puzzle.html')
       }
     }
   }
