@@ -14,10 +14,10 @@
       --piece-V: #5c7cfa; /* 靛藍 V */
       --piece-P: #00bcd4; /* 青碧 P */
       --piece-U: #fbc02d; /* 金黃 U */
-      --piece-W: #90a4ae; /* 銀灰 W */
+      --piece-Z: #90a4ae; /* 銀灰 Z */
       --piece-F: #26a69a; /* 薄荷 F */
       --piece-T: #7cb342; /* 草綠 T */
-      --piece-Z: #ab47bc; /* 紫紅 Z */
+      --piece-W: #ab47bc; /* 紫紅 W */
       --piece-X: #ef5350; /* 珊瑚紅 X */
     }
 
@@ -696,21 +696,63 @@
   <script type="module" src="/main.js"></script>
 
   <script>
-    // 12 種 Pentomino 零件外觀資訊
-    const PIECE_CONFIG = {
-      'I': { name: 'I 型', color: '#f06292', desc: '粉紅長條 1×5', svg: '<rect x="4" y="14" width="36" height="8" rx="2" fill="#f06292"/>' },
-      'L': { name: 'L 型', color: '#ff9800', desc: '亮橘 4+1', svg: '<path d="M6 10h8v12h24v8H6z" fill="#ff9800"/>' },
-      'Y': { name: 'Y 型', color: '#d78a56', desc: '棕褐 4+側1', svg: '<path d="M6 18h16v-8h8v8h8v8H6z" fill="#d78a56"/>' },
-      'N': { name: 'N 型', color: '#9c88ff', desc: '淺紫 3+2階梯', svg: '<path d="M6 10h16v6h16v8H22v-6H6z" fill="#9c88ff"/>' },
-      'V': { name: 'V 型', color: '#5c7cfa', desc: '靛藍 3×3角', svg: '<path d="M8 8h8v14h18v8H8z" fill="#5c7cfa"/>' },
-      'P': { name: 'P 型', color: '#00bcd4', desc: '青碧 3×2缺角', svg: '<path d="M8 8h24v16h-10v8H8z" fill="#00bcd4"/>' },
-      'U': { name: 'U 型', color: '#fbc02d', desc: '暖金 凹字形', svg: '<path d="M8 10h8v10h12v-10h8v18H8z" fill="#fbc02d"/>' },
-      'W': { name: 'W 型', color: '#90a4ae', desc: '銀灰 3層階梯', svg: '<path d="M6 8h12v8h12v8h10v6H26v-8H14v-8H6z" fill="#90a4ae"/>' },
-      'F': { name: 'F 型', color: '#26a69a', desc: '薄荷 拐杖/風車', svg: '<path d="M12 8h16v6h8v8h-8v8h-8v-8h-8z" fill="#26a69a"/>' },
-      'T': { name: 'T 型', color: '#7cb342', desc: '草綠 丁字十字', svg: '<path d="M6 8h32v8h-12v16h-8v-16H6z" fill="#7cb342"/>' },
-      'Z': { name: 'Z 型', color: '#ab47bc', desc: '紫紅 閃電', svg: '<path d="M18 8h18v8h-10v8h-18v-8h10z" fill="#ab47bc"/>' },
-      'X': { name: 'X 型', color: '#ef5350', desc: '珊瑚 正十字', svg: '<path d="M14 6h16v8h8v16h-8v8H14v-8H6V14h8z" fill="#ef5350"/>' }
+    // 12 種 Pentomino 零件外觀資訊與遊戲抽屜擺放坐標 (完全比照遊戲實機)
+    const PIECE_COORDS = {
+      'I': [[0,0], [0,1], [0,2], [0,3], [0,4]], // 1x5 粉紅
+      'L': [[0,0], [1,0], [1,1], [1,2], [1,3]], // 2x4 亮橘
+      'Y': [[0,0], [0,1], [0,2], [0,3], [1,2]], // 2x4 奶茶棕
+      'N': [[0,0], [0,1], [1,1], [1,2], [1,3]], // 2x4 淺紫
+      'V': [[0,0], [1,0], [2,0], [2,1], [2,2]], // 3x3 靛藍
+      'P': [[0,0], [0,1], [0,2], [1,0], [1,1]], // 2x3 青碧
+      'U': [[0,0], [0,2], [1,0], [1,1], [1,2]], // 2x3 暖金
+      'Z': [[0,0], [0,1], [1,1], [2,1], [2,2]], // 3x3 銀灰 (Z型閃電)
+      'F': [[0,0], [0,1], [1,1], [1,2], [2,1]], // 3x3 薄荷 (F型風車)
+      'T': [[0,1], [1,1], [2,0], [2,1], [2,2]], // 3x3 草綠 (T型丁字)
+      'W': [[0,1], [0,2], [1,0], [1,1], [2,0]], // 3x3 紫紅 (W型階梯)
+      'X': [[0,1], [1,0], [1,1], [1,2], [2,1]]  // 3x3 珊瑚 (X型正十字)
     };
+
+    const PIECE_CONFIG = {
+      'I': { name: 'I 型', color: '#f06292', desc: '粉紅長條 1×5' },
+      'L': { name: 'L 型', color: '#ff9800', desc: '亮橘 4+1' },
+      'Y': { name: 'Y 型', color: '#d78a56', desc: '奶茶棕 4+側1' },
+      'N': { name: 'N 型', color: '#9c88ff', desc: '淺紫 3+2階梯' },
+      'V': { name: 'V 型', color: '#5c7cfa', desc: '靛藍 3×3角落' },
+      'P': { name: 'P 型', color: '#00bcd4', desc: '青碧 3×2缺角' },
+      'U': { name: 'U 型', color: '#fbc02d', desc: '暖金 凹字形' },
+      'Z': { name: 'Z 型', color: '#90a4ae', desc: '銀灰 閃電 Z型' },
+      'F': { name: 'F 型', color: '#26a69a', desc: '薄荷 風車/拐杖 F型' },
+      'T': { name: 'T 型', color: '#7cb342', desc: '草綠 丁字十字 T型' },
+      'W': { name: 'W 型', color: '#ab47bc', desc: '紫紅 3階階梯 W型' },
+      'X': { name: 'X 型', color: '#ef5350', desc: '珊瑚 正十字 X型' }
+    };
+
+    function generatePieceSVG(key) {
+      const coords = PIECE_COORDS[key];
+      const color = PIECE_CONFIG[key].color;
+      const maxR = Math.max(...coords.map(c => c[0])) + 1;
+      const maxC = Math.max(...coords.map(c => c[1])) + 1;
+      const size = 6.8;
+      const gap = 1.2;
+      const totalW = maxC * size + (maxC - 1) * gap;
+      const totalH = maxR * size + (maxR - 1) * gap;
+      const startX = (44 - totalW) / 2;
+      const startY = (34 - totalH) / 2;
+
+      let rects = '';
+      coords.forEach(([r, c]) => {
+        const x = (startX + c * (size + gap)).toFixed(1);
+        const y = (startY + r * (size + gap)).toFixed(1);
+        const cx = (parseFloat(x) + size / 2).toFixed(1);
+        const cy = (parseFloat(y) + size / 2).toFixed(1);
+        rects += `
+          <rect x="${x}" y="${y}" width="${size}" height="${size}" rx="1.5" fill="${color}" stroke="rgba(255,255,255,0.4)" stroke-width="0.5"/>
+          <polygon points="${cx},${parseFloat(y)+1.2} ${parseFloat(x)+size-1.2},${cy} ${cx},${parseFloat(y)+size-1.2} ${parseFloat(x)+1.2},${cy}" fill="rgba(255,255,255,0.85)"/>
+        `;
+      });
+
+      return `<svg viewBox="0 0 44 34" width="44" height="34">${rects}</svg>`;
+    }
 
     // 全域狀態
     let puzzleData = null;
@@ -787,7 +829,7 @@
         btn.title = `${cfg.name} (${cfg.desc})`;
         btn.innerHTML = `
           <div class="piece-icon-svg">
-            <svg viewBox="0 0 44 36" width="38" height="30">${cfg.svg}</svg>
+            ${generatePieceSVG(key)}
           </div>
           <span class="piece-label" style="color:${cfg.color};">${key} 型</span>
         `;
@@ -1082,7 +1124,10 @@
       const pieces = getPiecesFromSolution(solStr);
       const tagsHtml = pieces.map(p => {
         const cfg = PIECE_CONFIG[p] || { color: '#888' };
-        return `<span class="piece-tag" style="background:${cfg.color}; font-size:0.9rem; padding:4px 10px;">${p} 型 - ${cfg.desc}</span>`;
+        return `<span class="piece-tag" style="background:${cfg.color}; font-size:0.9rem; padding:4px 10px; display:inline-flex; align-items:center; gap:6px;">
+          <span style="display:inline-flex; align-items:center; width:26px; height:20px;">${generatePieceSVG(p)}</span>
+          <span>${p} 型 (${cfg.desc})</span>
+        </span>`;
       }).join('');
       document.getElementById('modalTags').innerHTML = tagsHtml;
 
